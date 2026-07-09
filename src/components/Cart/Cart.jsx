@@ -1,103 +1,73 @@
 import './Cart.css'
-import { useCallback, useEffect, useState } from 'react'
-import { useCart } from '../../store/useCart'
+import { createPortal } from 'react-dom'
 
-export default function Cart({ open, onClose }) {
-  const { items, totalAmount, changeBy, removeItem, clearCart } = useCart()
-  const [ordered, setOrdered] = useState(false)
+const CART_ITEMS = [
+  {
+    id: 'c1',
+    name: 'Sushi',
+    price: 22.99,
+    amount: 2,
+  },
+  {
+    id: 'c2',
+    name: 'Schnitzel',
+    price: 16.5,
+    amount: 1,
+  },
+]
 
-  const handleClose = useCallback(() => {
-    setOrdered(false)
-    onClose()
-  }, [onClose])
+const totalAmount = CART_ITEMS.reduce((sum, item) => sum + item.price * item.amount, 0)
 
-  useEffect(() => {
-    if (!open) return
+function Backdrop() {
+  return <div className="cart-overlay" />
+}
 
-    function handleKeyDown(event) {
-      if (event.key === 'Escape') {
-        handleClose()
-      }
-    }
-
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [handleClose, open])
-
-  function handleOrder() {
-    if (items.length === 0) return
-    clearCart()
-    setOrdered(true)
-  }
-
-  if (!open) return null
-
+function CartModal() {
   return (
-    <div className="cart-overlay" onClick={handleClose}>
-      <div className="cart-modal" onClick={(e) => e.stopPropagation()}>
-        <div className="cart-heading">
-          <div>
-            <span className="eyebrow">Checkout</span>
-            <h3>Your Order</h3>
+    <div className="cart-modal">
+      <div className="cart-list">
+        {CART_ITEMS.map((item) => (
+          <div className="cart-row" key={item.id}>
+            <div className="cart-info">
+              <h2 className="cart-name">{item.name}</h2>
+              <div className="cart-meta">
+                <span className="cart-price">${item.price.toFixed(2)}</span>
+                <span className="cart-amount">x {item.amount}</span>
+              </div>
+            </div>
+            <div className="cart-controls">
+              <button type="button">-</button>
+              <button type="button">+</button>
+            </div>
           </div>
-          <button className="icon-button" onClick={handleClose} type="button" aria-label="Close cart">
-            x
+        ))}
+      </div>
+
+      <div className="cart-footer">
+        <div className="total">
+          <span>Total Amount</span>
+          <strong>${totalAmount.toFixed(2)}</strong>
+        </div>
+        <div className="actions">
+          <button className="btn secondary" type="button">
+            Close
           </button>
-        </div>
-
-        {ordered && (
-          <div className="order-success" role="status">
-            Order placed. Your kitchen has started preparing it.
-          </div>
-        )}
-
-        <div className="cart-list">
-          {items.length === 0 && !ordered && (
-            <div className="empty">
-              <strong>Your cart is empty.</strong>
-              <span>Add a dish from the menu to start your order.</span>
-            </div>
-          )}
-          {items.map((it) => (
-            <div className="cart-row" key={it.id}>
-              <div className="cart-info">
-                <div className="cart-name">{it.name}</div>
-                <div className="cart-meta">
-                  <span>${it.price.toFixed(2)}</span>
-                  <span>x{it.amount}</span>
-                </div>
-              </div>
-              <div className="cart-controls">
-                <button onClick={() => changeBy(it.id, -1)} type="button" aria-label={`Decrease ${it.name}`}>
-                  -
-                </button>
-                <span className="cart-line-total">${(it.price * it.amount).toFixed(2)}</span>
-                <button onClick={() => changeBy(it.id, 1)} type="button" aria-label={`Increase ${it.name}`}>
-                  +
-                </button>
-                <button className="remove" onClick={() => removeItem(it.id)} type="button">
-                  Remove
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="cart-footer">
-          <div className="total">
-            <span>Total Amount</span>
-            <strong>${totalAmount.toFixed(2)}</strong>
-          </div>
-          <div className="actions">
-            <button className="btn secondary" onClick={handleClose} type="button">
-              Close
-            </button>
-            <button className="btn primary" onClick={handleOrder} type="button" disabled={items.length === 0}>
-              Order
-            </button>
-          </div>
+          <button className="btn primary" type="button">
+            Order
+          </button>
         </div>
       </div>
     </div>
+  )
+}
+
+export default function Cart() {
+  const portalElement = document.getElementById('overlays')
+
+  return (
+    <>
+      {createPortal(<Backdrop />, portalElement)}
+      {createPortal(<CartModal />, portalElement)}
+    </>
   )
 }

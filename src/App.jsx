@@ -1,17 +1,14 @@
 import './App.css'
-import { useState } from 'react'
 import { CartProvider } from './store/CartContext'
 import Header from './components/Header'
 import Meals from './components/Meals/Meals'
 import Cart from './components/Cart/Cart'
 
 function App() {
-  const [cartOpen, setCartOpen] = useState(false)
-
   return (
     <CartProvider>
       <div className="app-root">
-        <Header onShowCart={() => setCartOpen(true)} />
+        <Header cartCount={3} />
         <main>
           <section className="hero-banner">
             <div className="hero-content">
@@ -32,7 +29,7 @@ function App() {
           </section>
         </main>
 
-        <Cart open={cartOpen} onClose={() => setCartOpen(false)} />
+        <Cart />
       </div>
     </CartProvider>
   )

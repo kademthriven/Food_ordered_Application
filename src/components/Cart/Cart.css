@@ -2,24 +2,26 @@
   position: fixed;
   inset: 0;
   z-index: 1200;
-  display: grid;
-  place-items: center;
-  padding: 20px;
   background: rgba(20, 12, 8, 0.58);
   backdrop-filter: blur(8px);
 }
 
 .cart-modal {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  z-index: 1210;
   width: min(680px, 100%);
   max-height: min(720px, calc(100vh - 40px));
   display: grid;
-  grid-template-rows: auto auto minmax(0, 1fr) auto;
-  gap: 18px;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 16px;
   border: 1px solid rgba(234, 215, 197, 0.88);
   border-radius: 8px;
   padding: 22px;
   background: #fffdf9;
   box-shadow: 0 26px 70px rgba(20, 12, 8, 0.34);
+  transform: translate(-50%, -50%);
 }
 
 .cart-heading {
@@ -104,28 +106,43 @@
 }
 
 .cart-name {
+  margin: 0;
   color: var(--ink);
-  font-size: 1.05rem;
+  font-size: 1.22rem;
   font-weight: 900;
 }
 
 .cart-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 14px;
   color: var(--muted);
   font-size: 0.92rem;
   font-weight: 700;
 }
 
+.cart-price {
+  color: var(--primary-dark);
+  font-weight: 900;
+}
+
+.cart-amount {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 2px 10px;
+  color: var(--ink);
+  background: #fff8f0;
+  font-weight: 900;
+}
+
 .cart-controls {
-  display: grid;
-  grid-template-columns: 36px minmax(78px, auto) 36px auto;
+  display: flex;
   align-items: center;
   gap: 8px;
 }
 
 .cart-controls button {
+  min-width: 42px;
   height: 36px;
   border: 1px solid rgba(187, 63, 34, 0.35);
   border-radius: 8px;
@@ -136,20 +153,6 @@
 
 .cart-controls button:hover {
   background: var(--surface-soft);
-}
-
-.cart-line-total {
-  min-width: 78px;
-  color: var(--ink);
-  text-align: center;
-  font-weight: 900;
-}
-
-.cart-controls .remove {
-  padding: 0 11px;
-  color: var(--muted);
-  border-color: var(--line);
-  background: transparent;
 }
 
 .cart-footer {
@@ -212,23 +215,20 @@
 }
 
 @media (max-width: 620px) {
-  .cart-overlay {
-    align-items: end;
-    padding: 10px;
-  }
-
   .cart-modal {
+    top: auto;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    width: auto;
     max-height: calc(100vh - 20px);
     padding: 18px;
+    transform: none;
   }
 
   .cart-row {
     grid-template-columns: 1fr;
     gap: 12px;
-  }
-
-  .cart-controls {
-    grid-template-columns: 36px minmax(78px, 1fr) 36px auto;
   }
 
   .cart-footer {
