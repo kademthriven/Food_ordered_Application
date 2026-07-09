@@ -1,14 +1,25 @@
 import './App.css'
+import { useState } from 'react'
 import { CartProvider } from './store/CartContext'
 import Header from './components/Header'
 import Meals from './components/Meals/Meals'
 import Cart from './components/Cart/Cart'
 
 function App() {
+  const [cartIsShown, setCartIsShown] = useState(false)
+
+  function showCartHandler() {
+    setCartIsShown(true)
+  }
+
+  function hideCartHandler() {
+    setCartIsShown(false)
+  }
+
   return (
     <CartProvider>
       <div className="app-root">
-        <Header cartCount={3} />
+        <Header onShowCart={showCartHandler} cartCount={3} />
         <main>
           <section className="hero-banner">
             <div className="hero-content">
@@ -29,7 +40,7 @@ function App() {
           </section>
         </main>
 
-        <Cart />
+        {cartIsShown && <Cart onClose={hideCartHandler} />}
       </div>
     </CartProvider>
   )

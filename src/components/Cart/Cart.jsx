@@ -22,7 +22,7 @@ function Backdrop() {
   return <div className="cart-overlay" />
 }
 
-function CartModal() {
+function CartModal({ onClose }) {
   return (
     <div className="cart-modal">
       <div className="cart-list">
@@ -49,7 +49,7 @@ function CartModal() {
           <strong>${totalAmount.toFixed(2)}</strong>
         </div>
         <div className="actions">
-          <button className="btn secondary" type="button">
+          <button className="btn secondary" onClick={onClose} type="button">
             Close
           </button>
           <button className="btn primary" type="button">
@@ -61,13 +61,14 @@ function CartModal() {
   )
 }
 
-export default function Cart() {
+export default function Cart({ onClose }) {
   const portalElement = document.getElementById('overlays')
+  if (!portalElement) return null
 
   return (
     <>
       {createPortal(<Backdrop />, portalElement)}
-      {createPortal(<CartModal />, portalElement)}
+      {createPortal(<CartModal onClose={onClose} />, portalElement)}
     </>
   )
 }
