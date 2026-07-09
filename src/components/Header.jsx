@@ -2,15 +2,14 @@ import './Header.css'
 import { useEffect, useRef, useState } from 'react'
 import { useCart } from '../store/useCart'
 
-export default function Header({ onShowCart, cartCount }) {
+export default function Header({ onShowCart }) {
   const { totalCount } = useCart()
-  const displayedCount = cartCount ?? totalCount
   const [cartIsHighlighted, setCartIsHighlighted] = useState(false)
-  const previousCount = useRef(displayedCount)
+  const previousCount = useRef(totalCount)
 
   useEffect(() => {
-    if (displayedCount <= previousCount.current) {
-      previousCount.current = displayedCount
+    if (totalCount <= previousCount.current) {
+      previousCount.current = totalCount
       return
     }
 
@@ -19,9 +18,9 @@ export default function Header({ onShowCart, cartCount }) {
       setCartIsHighlighted(false)
     }, 360)
 
-    previousCount.current = displayedCount
+    previousCount.current = totalCount
     return () => clearTimeout(timer)
-  }, [displayedCount])
+  }, [totalCount])
 
   return (
     <header className="app-header">
@@ -46,7 +45,7 @@ export default function Header({ onShowCart, cartCount }) {
         >
           <span className="cart-icon" aria-hidden="true" />
           <span className="cart-text">Your Cart</span>
-          <span className="cart-count">{displayedCount}</span>
+          <span className="cart-count">{totalCount}</span>
         </button>
       </div>
     </header>

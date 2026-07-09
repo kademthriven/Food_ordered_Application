@@ -19,7 +19,7 @@ function App() {
   return (
     <CartProvider>
       <div className="app-root">
-        <Header onShowCart={showCartHandler} cartCount={3} />
+        <Header onShowCart={showCartHandler} />
         <main>
           <section className="hero-banner">
             <div className="hero-content">

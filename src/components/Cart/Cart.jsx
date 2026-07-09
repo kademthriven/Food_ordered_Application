@@ -1,32 +1,25 @@
 import './Cart.css'
 import { createPortal } from 'react-dom'
+import { useCart } from '../../store/useCart'
 
-const CART_ITEMS = [
-  {
-    id: 'c1',
-    name: 'Sushi',
-    price: 22.99,
-    amount: 2,
-  },
-  {
-    id: 'c2',
-    name: 'Schnitzel',
-    price: 16.5,
-    amount: 1,
-  },
-]
-
-const totalAmount = CART_ITEMS.reduce((sum, item) => sum + item.price * item.amount, 0)
-
-function Backdrop() {
-  return <div className="cart-overlay" />
+function Backdrop({ onClose }) {
+  return <div className="cart-overlay" onClick={onClose} />
 }
 
 function CartModal({ onClose }) {
+  const { items, totalAmount, changeBy } = useCart()
+
   return (
     <div className="cart-modal">
       <div className="cart-list">
-        {CART_ITEMS.map((item) => (
+        {items.length === 0 && (
+          <div className="empty">
+            <strong>Your cart is empty.</strong>
+            <span>Add a dish from the menu to start your order.</span>
+          </div>
+        )}
+
+        {items.map((item) => (
           <div className="cart-row" key={item.id}>
             <div className="cart-info">
               <h2 className="cart-name">{item.name}</h2>
@@ -36,8 +29,12 @@ function CartModal({ onClose }) {
               </div>
             </div>
             <div className="cart-controls">
-              <button type="button">-</button>
-              <button type="button">+</button>
+              <button onClick={() => changeBy(item.id, -1)} type="button" aria-label={`Decrease ${item.name}`}>
+                -
+              </button>
+              <button onClick={() => changeBy(item.id, 1)} type="button" aria-label={`Increase ${item.name}`}>
+                +
+              </button>
             </div>
           </div>
         ))}
@@ -67,7 +64,7 @@ export default function Cart({ onClose }) {
 
   return (
     <>
-      {createPortal(<Backdrop />, portalElement)}
+      {createPortal(<Backdrop onClose={onClose} />, portalElement)}
       {createPortal(<CartModal onClose={onClose} />, portalElement)}
     </>
   )
