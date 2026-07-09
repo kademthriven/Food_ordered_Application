@@ -15,17 +15,15 @@ function App() {
         <main>
           <section className="hero-banner">
             <div className="hero-content">
-              <span className="hero-kicker">Fresh meals, made fast</span>
               <h1>Delicious Food, Delivered To You</h1>
               <p>
-                Choose restaurant-quality favorites from our curated kitchen and
-                enjoy a warm lunch or dinner at home.
+                Choose your favorite meal from our broad selection of available
+                meals and enjoy a delicious lunch or dinner at home.
               </p>
-              <div className="hero-stats" aria-label="Service highlights">
-                <span>30 min average</span>
-                <span>Local chefs</span>
-                <span>Fresh daily</span>
-              </div>
+              <p>
+                All our meals are cooked with high-quality ingredients,
+                just-in-time and of course by experienced chefs!
+              </p>
             </div>
           </section>
 

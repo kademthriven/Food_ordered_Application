@@ -11,7 +11,14 @@ export default function Header({ onShowCart }) {
           <span className="brand-mark" aria-hidden="true">
             R
           </span>
-          <h2 className="brand">ReactMeals</h2>
+          <div>
+            <h2 className="brand">ReactMeals</h2>
+            <span className="brand-subtitle">Fresh kitchen delivery</span>
+          </div>
+        </div>
+        <div className="header-status" aria-hidden="true">
+          <span className="status-dot" />
+          Open now
         </div>
         <button className="cart-button" onClick={onShowCart} type="button">
           <span className="cart-icon" aria-hidden="true" />
