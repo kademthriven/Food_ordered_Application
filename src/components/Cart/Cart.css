@@ -135,6 +135,11 @@
   font-weight: 900;
 }
 
+.cart-subtotal {
+  color: var(--ink);
+  font-weight: 900;
+}
+
 .cart-controls {
   display: flex;
   align-items: center;

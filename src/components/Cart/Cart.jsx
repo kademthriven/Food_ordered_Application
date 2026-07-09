@@ -7,7 +7,7 @@ function Backdrop({ onClose }) {
 }
 
 function CartModal({ onClose }) {
-  const { items, totalAmount, changeBy } = useCart()
+  const { items, totalAmount, addOne, removeOne } = useCart()
 
   return (
     <div className="cart-modal">
@@ -26,13 +26,14 @@ function CartModal({ onClose }) {
               <div className="cart-meta">
                 <span className="cart-price">${item.price.toFixed(2)}</span>
                 <span className="cart-amount">x {item.amount}</span>
+                <span className="cart-subtotal">${(item.price * item.amount).toFixed(2)}</span>
               </div>
             </div>
             <div className="cart-controls">
-              <button onClick={() => changeBy(item.id, -1)} type="button" aria-label={`Decrease ${item.name}`}>
+              <button onClick={() => removeOne(item.id)} type="button" aria-label={`Decrease ${item.name}`}>
                 -
               </button>
-              <button onClick={() => changeBy(item.id, 1)} type="button" aria-label={`Increase ${item.name}`}>
+              <button onClick={() => addOne(item.id)} type="button" aria-label={`Increase ${item.name}`}>
                 +
               </button>
             </div>

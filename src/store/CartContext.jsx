@@ -40,6 +40,14 @@ export function CartProvider({ children }) {
     })
   }
 
+  function addOne(id) {
+    changeBy(id, 1)
+  }
+
+  function removeOne(id) {
+    changeBy(id, -1)
+  }
+
   function clearCart() {
     setItems([])
   }
@@ -55,6 +63,8 @@ export function CartProvider({ children }) {
         removeItem,
         updateAmount,
         changeBy,
+        addOne,
+        removeOne,
         clearCart,
         totalAmount,
         totalCount,
