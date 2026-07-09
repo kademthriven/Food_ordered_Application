@@ -1,0 +1,243 @@
+.cart-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(20, 12, 8, 0.58);
+  backdrop-filter: blur(8px);
+}
+
+.cart-modal {
+  width: min(680px, 100%);
+  max-height: min(720px, calc(100vh - 40px));
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  gap: 18px;
+  border: 1px solid rgba(234, 215, 197, 0.88);
+  border-radius: 8px;
+  padding: 22px;
+  background: #fffdf9;
+  box-shadow: 0 26px 70px rgba(20, 12, 8, 0.34);
+}
+
+.cart-heading {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.cart-heading h3 {
+  margin-top: 4px;
+  color: var(--ink);
+  font-size: 1.75rem;
+  line-height: 1.1;
+}
+
+.icon-button {
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--muted);
+  background: var(--surface);
+  font-weight: 900;
+}
+
+.icon-button:hover {
+  color: var(--ink);
+  background: var(--surface-soft);
+}
+
+.order-success {
+  border: 1px solid rgba(18, 108, 91, 0.24);
+  border-radius: 8px;
+  padding: 12px 14px;
+  color: #0f594c;
+  background: rgba(18, 108, 91, 0.09);
+  font-weight: 800;
+}
+
+.cart-list {
+  min-height: 92px;
+  max-height: 360px;
+  overflow: auto;
+  padding-right: 4px;
+}
+
+.empty {
+  min-height: 136px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 6px;
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+  color: var(--muted);
+  background: #fff8f0;
+  text-align: center;
+}
+
+.empty strong {
+  color: var(--ink);
+}
+
+.cart-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.cart-row:first-child {
+  padding-top: 0;
+}
+
+.cart-info {
+  min-width: 0;
+  display: grid;
+  gap: 5px;
+}
+
+.cart-name {
+  color: var(--ink);
+  font-size: 1.05rem;
+  font-weight: 900;
+}
+
+.cart-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.cart-controls {
+  display: grid;
+  grid-template-columns: 36px minmax(78px, auto) 36px auto;
+  align-items: center;
+  gap: 8px;
+}
+
+.cart-controls button {
+  height: 36px;
+  border: 1px solid rgba(187, 63, 34, 0.35);
+  border-radius: 8px;
+  color: var(--primary-dark);
+  background: #fff8f0;
+  font-weight: 900;
+}
+
+.cart-controls button:hover {
+  background: var(--surface-soft);
+}
+
+.cart-line-total {
+  min-width: 78px;
+  color: var(--ink);
+  text-align: center;
+  font-weight: 900;
+}
+
+.cart-controls .remove {
+  padding: 0 11px;
+  color: var(--muted);
+  border-color: var(--line);
+  background: transparent;
+}
+
+.cart-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 4px;
+}
+
+.total {
+  display: grid;
+  gap: 2px;
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.total strong {
+  color: var(--ink);
+  font-size: 1.55rem;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  min-width: 98px;
+  height: 44px;
+  border-radius: 8px;
+  padding: 0 16px;
+  font-weight: 900;
+}
+
+.btn.primary {
+  border: 0;
+  color: #ffffff;
+  background: var(--primary);
+  box-shadow: 0 12px 24px rgba(187, 63, 34, 0.18);
+}
+
+.btn.primary:hover:not(:disabled) {
+  background: var(--primary-dark);
+}
+
+.btn.primary:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+
+.btn.secondary {
+  border: 1px solid var(--line);
+  color: var(--ink);
+  background: transparent;
+}
+
+.btn.secondary:hover {
+  background: var(--surface-soft);
+}
+
+@media (max-width: 620px) {
+  .cart-overlay {
+    align-items: end;
+    padding: 10px;
+  }
+
+  .cart-modal {
+    max-height: calc(100vh - 20px);
+    padding: 18px;
+  }
+
+  .cart-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .cart-controls {
+    grid-template-columns: 36px minmax(78px, 1fr) 36px auto;
+  }
+
+  .cart-footer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}
